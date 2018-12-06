@@ -1,14 +1,17 @@
 const graphql = require("graphql");
-const PaintingType = require("./PaintingType.js");
+const ZombieType = require("./ZombieType.js");
+const Zombie = require("./../models/Zombie");
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    painting: {
-      type: PaintingType,
+    zombie: {
+      type: ZombieType,
       args: { id: { type: GraphQLString } },
-      resolve(parent, args) {}
+      resolve(parent, args) {
+        return Zombie.findById(args.id);
+      }
     }
   }
 });

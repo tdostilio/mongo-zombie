@@ -4,17 +4,17 @@ const hapi = require("hapi");
 const { graphqlHapi, graphiqlHapi } = require("apollo-server-hapi");
 const schema = require("./graphql/schema");
 const mongoose = require("mongoose");
-const Painting = require("./models/Painting");
+const Zombie = require("./models/Zombie");
 
 const Inert = require("inert");
 const Vision = require("vision");
 const HapiSwagger = require("hapi-swagger");
-const Pack = require("./package");
+const Pack = require("../package");
 
 mongoose.connect(
   `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}${
     process.env.DB_HOST
-  }/prm-backend`
+  }/zombie-manager`
 );
 mongoose.connection.once("open", () => {
   console.log("connected to the database");
@@ -33,7 +33,7 @@ const init = async () => {
       plugin: HapiSwagger,
       options: {
         info: {
-          title: "Paintings API Documentation",
+          title: "Zombies API Documentation",
           version: Pack.version
         }
       }
@@ -76,31 +76,38 @@ const init = async () => {
     },
     {
       method: "GET",
-      path: "/api/v1/paintings",
+      path: "/zombies",
       config: {
-        description: "Get all the paintings",
-        tags: ["api", "v1", "painting"]
+        description: "Get all the zombies",
+        tags: ["api", "zombie"]
       },
       handler: (req, reply) => {
-        return Painting.find();
+        return Zombie.find();
+      }
+    },
+    {
+      method: "GET",
+      path: "/api/v1/paintings",
+      handler: (req, reply) => {
+        return Zombie.find();
       }
     },
     {
       method: "POST",
-      path: "/api/v1/paintings",
+      path: "/zombies",
       config: {
-        description: "Get a specific painting by ID.",
-        tags: ["api", "v1", "painting"]
+        description: "Create a new zombie.",
+        tags: ["zombie"]
       },
       handler: (req, reply) => {
-        const { name, url, techniques } = req.payload;
-        const painting = new Painting({
+        const { name, location, gender } = req.payload;
+        const zombie = new Zombie({
           name,
-          url,
-          techniques
+          location,
+          gender
         });
 
-        return painting.save();
+        return zombie.save();
       }
     }
   ]);
