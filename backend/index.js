@@ -69,13 +69,6 @@ const init = async () => {
   server.route([
     {
       method: "GET",
-      path: "/",
-      handler: (req, reply) => {
-        return `<h1>My modern api</h1>`;
-      }
-    },
-    {
-      method: "GET",
       path: "/zombies",
       config: {
         description: "Get all the zombies",
@@ -86,18 +79,18 @@ const init = async () => {
       }
     },
     {
-      method: "GET",
-      path: "/api/v1/paintings",
-      handler: (req, reply) => {
-        return Zombie.find();
-      }
-    },
-    {
       method: "POST",
       path: "/zombies",
       config: {
         description: "Create a new zombie.",
-        tags: ["zombie"]
+        tags: ["api", "zombie"],
+        validate: {
+          payload: {
+            name: "string",
+            location: "string",
+            gender: "string"
+          }
+        }
       },
       handler: (req, reply) => {
         const { name, location, gender } = req.payload;
