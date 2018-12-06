@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Zombie-lists-container {
+  width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.zombie-dashboard {
+  display: flex;
+  width: 70%;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.location-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 300px;
+  padding: 0px;
+}
+
+.location-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
